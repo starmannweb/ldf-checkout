@@ -153,10 +153,9 @@ function renderSummaryHtml(plan, isMobile) {
         ${plan.benefits.map(b => `<div class="benefit-item"><i data-lucide="check"></i><span>${b}</span></div>`).join('')}
       </div>
       <div class="plan-footer">
-        <p class="secure-note">🔒 Pagamento 100% seguro</p>
-        <div class="guarantee">
-          <span>Garantido por</span>
-          <img src="assets/sura (1) (1).png" alt="Sura" class="logo-sura">
+        <div class="guarantee" style="display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--muted-foreground); font-size: 0.875rem; flex-wrap: wrap;">
+          <span>🔒 Pagamento 100% Seguro feito pela</span>
+          <img src="assets/logo-iugu.png" alt="Iugu" style="height: 20px; object-fit: contain;">
         </div>
       </div>
     </div>
