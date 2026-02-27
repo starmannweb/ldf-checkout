@@ -8,19 +8,19 @@ const STORAGE_KEY = 'ldf-checkout';
 const PLANS_CATALOG = {
   essencial: {
     id: 'essencial', name: 'Essencial', price: 41.90, totalPrice: 502.80,
-    benefits: ['Cobertura até R$ 4.000,00', 'Sem franquia em caso de sinistro', 'Cobertura básica 24h', 'Assistência em todo Brasil', 'Certificado digital imediato']
+    benefits: ['Cobertura até R$ 4.000,00', 'Cobertura por morte acidental de até R$ 20.000', 'Sorteios mensais de R$ 10.000 pela Loteria Federal', 'Franquia 100% quitada', 'Assistência em todo o Brasil']
   },
   conforto: {
     id: 'conforto', name: 'Conforto', price: 60.90, totalPrice: 730.80,
-    benefits: ['Cobertura até R$ 6.000,00', 'Sem franquia em caso de sinistro', 'Cobertura completa 24h', 'Assistência em todo Brasil', 'Certificado digital imediato', 'Carro reserva por 7 dias']
+    benefits: ['Cobertura até R$ 6.000,00', 'Cobertura por morte acidental de até R$ 20.000', 'Sorteios mensais de R$ 10.000 pela Loteria Federal', 'Franquia 100% quitada', 'Assistência em todo o Brasil']
   },
   premium: {
     id: 'premium', name: 'Premium', price: 80.90, totalPrice: 970.80,
-    benefits: ['Cobertura até R$ 8.000,00', 'Sem franquia em caso de sinistro', 'Cobertura completa 24h', 'Assistência em todo Brasil', 'Certificado digital imediato', 'Carro reserva por 15 dias', 'Vidros e retrovisores inclusos']
+    benefits: ['Cobertura até R$ 8.000,00', 'Cobertura por morte acidental de até R$ 20.000', 'Sorteios mensais de R$ 10.000 pela Loteria Federal', 'Franquia 100% quitada', 'Assistência em todo o Brasil']
   },
   exclusivo: {
     id: 'exclusivo', name: 'Exclusivo', price: 99.90, totalPrice: 1198.80,
-    benefits: ['Cobertura até R$ 10.000,00', 'Sem franquia em caso de sinistro', 'Cobertura total 24h', 'Assistência em todo Brasil', 'Certificado digital imediato', 'Carro reserva por 30 dias', 'Vidros, retrovisores e faróis', 'Proteção para terceiros ampliada']
+    benefits: ['Cobertura até R$ 10.000,00', 'Cobertura por morte acidental de até R$ 20.000', 'Sorteios mensais de R$ 10.000 pela Loteria Federal', 'Franquia 100% quitada', 'Assistência em todo o Brasil']
   },
 };
 
