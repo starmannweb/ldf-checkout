@@ -150,9 +150,9 @@
                     <i data-lucide="check-circle"></i>
                 </div>
 
-                <h1 class="message-title">Parabéns, agora você é Livre de Franquia.</h1>
+                <h1 class="message-title">Parabéns, agora você é Livre de Franquia!</h1>
                 <p class="message-subtitle">Seu certificado foi enviado para seu e-mail.</p>
-                <p class="proposal-num">Proposta número LF-<span id="lbl-proposal">000000</span> criada.</p>
+                <p class="proposal-num">Proposta número LDF-<span id="lbl-proposal">000000</span> criada.</p>
 
                 <div class="summary-box">
                     <div class="summary-row">
@@ -204,9 +204,10 @@
                     document.getElementById('lbl-price').innerText = `R$ ${state.plan.price.toFixed(2).replace('.', ',')}`;
 
                     let parcelas = parseInt(state.payment.parcelas) || 1;
+                    let amountToDivide = state.plan.totalPrice || state.plan.price;
                     let parcelasLabel = parcelas === 1
                         ? 'À vista'
-                        : `${parcelas}x de R$ ${(state.plan.price / parcelas).toFixed(2).replace('.', ',')}`;
+                        : `${parcelas}x de R$ ${(amountToDivide / parcelas).toFixed(2).replace('.', ',')}`;
 
                     document.getElementById('lbl-installments').innerText = parcelasLabel;
                 }

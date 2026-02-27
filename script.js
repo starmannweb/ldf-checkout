@@ -7,19 +7,19 @@ const STORAGE_KEY = 'ldf-checkout';
 // Plans Catalog
 const PLANS_CATALOG = {
   essencial: {
-    id: 'essencial', name: 'Essencial', price: 41.90,
+    id: 'essencial', name: 'Essencial', price: 41.90, totalPrice: 502.80,
     benefits: ['Sem franquia em caso de sinistro', 'Cobertura básica 24h', 'Assistência em todo Brasil', 'Certificado digital imediato']
   },
   conforto: {
-    id: 'conforto', name: 'Conforto', price: 60.90,
+    id: 'conforto', name: 'Conforto', price: 60.90, totalPrice: 730.80,
     benefits: ['Sem franquia em caso de sinistro', 'Cobertura completa 24h', 'Assistência em todo Brasil', 'Certificado digital imediato', 'Carro reserva por 7 dias']
   },
   premium: {
-    id: 'premium', name: 'Premium', price: 80.90,
+    id: 'premium', name: 'Premium', price: 80.90, totalPrice: 970.80,
     benefits: ['Sem franquia em caso de sinistro', 'Cobertura completa 24h', 'Assistência em todo Brasil', 'Certificado digital imediato', 'Carro reserva por 15 dias', 'Vidros e retrovisores inclusos']
   },
   exclusivo: {
-    id: 'exclusivo', name: 'Exclusivo', price: 99.90,
+    id: 'exclusivo', name: 'Exclusivo', price: 99.90, totalPrice: 1198.80,
     benefits: ['Sem franquia em caso de sinistro', 'Cobertura total 24h', 'Assistência em todo Brasil', 'Certificado digital imediato', 'Carro reserva por 30 dias', 'Vidros, retrovisores e faróis', 'Proteção para terceiros ampliada']
   },
 };
@@ -266,7 +266,7 @@ function loadFields() {
   dom('anoExpiracao').innerHTML = yearHtml;
 
   if (state.plan) {
-    let price = state.plan.price;
+    let price = state.plan.totalPrice;
     let parcHtml = '<option value="">Selecione</option>';
     for (let i = 1; i <= 12; i++) {
       let val = (price / i).toFixed(2).replace('.', ',');
