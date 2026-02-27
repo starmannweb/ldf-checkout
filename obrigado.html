@@ -203,11 +203,8 @@
                     document.getElementById('lbl-plan').innerText = state.plan.name;
                     document.getElementById('lbl-price').innerText = `R$ ${state.plan.price.toFixed(2).replace('.', ',')}`;
 
-                    let parcelas = parseInt(state.payment.parcelas) || 1;
-                    let amountToDivide = state.plan.totalPrice || state.plan.price;
-                    let parcelasLabel = parcelas === 1
-                        ? 'À vista'
-                        : `${parcelas}x de R$ ${(amountToDivide / parcelas).toFixed(2).replace('.', ',')}`;
+                    let val = state.plan.price.toFixed(2).replace('.', ',');
+                    let parcelasLabel = `12x de R$ ${val}`;
 
                     document.getElementById('lbl-installments').innerText = parcelasLabel;
                 }

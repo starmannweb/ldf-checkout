@@ -8,19 +8,19 @@ const STORAGE_KEY = 'ldf-checkout';
 const PLANS_CATALOG = {
   essencial: {
     id: 'essencial', name: 'Essencial', price: 41.90, totalPrice: 502.80,
-    benefits: ['Sem franquia em caso de sinistro', 'Cobertura básica 24h', 'Assistência em todo Brasil', 'Certificado digital imediato']
+    benefits: ['Cobertura até R$ 4.000,00', 'Sem franquia em caso de sinistro', 'Cobertura básica 24h', 'Assistência em todo Brasil', 'Certificado digital imediato']
   },
   conforto: {
     id: 'conforto', name: 'Conforto', price: 60.90, totalPrice: 730.80,
-    benefits: ['Sem franquia em caso de sinistro', 'Cobertura completa 24h', 'Assistência em todo Brasil', 'Certificado digital imediato', 'Carro reserva por 7 dias']
+    benefits: ['Cobertura até R$ 6.000,00', 'Sem franquia em caso de sinistro', 'Cobertura completa 24h', 'Assistência em todo Brasil', 'Certificado digital imediato', 'Carro reserva por 7 dias']
   },
   premium: {
     id: 'premium', name: 'Premium', price: 80.90, totalPrice: 970.80,
-    benefits: ['Sem franquia em caso de sinistro', 'Cobertura completa 24h', 'Assistência em todo Brasil', 'Certificado digital imediato', 'Carro reserva por 15 dias', 'Vidros e retrovisores inclusos']
+    benefits: ['Cobertura até R$ 8.000,00', 'Sem franquia em caso de sinistro', 'Cobertura completa 24h', 'Assistência em todo Brasil', 'Certificado digital imediato', 'Carro reserva por 15 dias', 'Vidros e retrovisores inclusos']
   },
   exclusivo: {
     id: 'exclusivo', name: 'Exclusivo', price: 99.90, totalPrice: 1198.80,
-    benefits: ['Sem franquia em caso de sinistro', 'Cobertura total 24h', 'Assistência em todo Brasil', 'Certificado digital imediato', 'Carro reserva por 30 dias', 'Vidros, retrovisores e faróis', 'Proteção para terceiros ampliada']
+    benefits: ['Cobertura até R$ 10.000,00', 'Sem franquia em caso de sinistro', 'Cobertura total 24h', 'Assistência em todo Brasil', 'Certificado digital imediato', 'Carro reserva por 30 dias', 'Vidros, retrovisores e faróis', 'Proteção para terceiros ampliada']
   },
 };
 
@@ -248,6 +248,32 @@ function bindMasks() {
   ['titularCartao', 'mesExpiracao', 'anoExpiracao', 'parcelas'].forEach(id => {
     dom(id).addEventListener('input', e => state.payment[id] = e.target.value);
   });
+
+  const getCardBrand = (number) => {
+    const unmasked = number.replace(/\D/g, '');
+    if (/^3[47]/.test(unmasked)) return 'amex';
+    if (/^4/.test(unmasked)) return 'visa';
+    if (/^5[1-5]/.test(unmasked) || /^2[2-7]/.test(unmasked)) return 'mastercard';
+    if (/^(4011|4312|4389|4514|4576|5041|5066|5090|6277|6362|6363|650|6516|6550)/.test(unmasked)) return 'elo';
+    return 'unknown';
+  };
+
+  const updateCardIcon = (brand) => {
+    const iconContainer = dom('card-icon-container');
+    if (!iconContainer) return;
+    if (brand === 'visa') iconContainer.innerHTML = '<svg viewBox="0 0 32 20" width="32" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="20" rx="4" fill="#1434CB"/><path d="M12.5 13.5L14.2 4H16.8L15.1 13.5H12.5ZM23.3 4C22.6 4 21.6 4.3 21 5L19.5 10.3C19.3 11 20 11.5 20.6 11.7L24 13C24.4 13.1 24.6 12.5 24.5 12L23.3 4ZM9.6 4L7.8 11.5L6.3 4H3.8L6.5 13.5H9L12 4H9.6Z" fill="white"/></svg>';
+    else if (brand === 'mastercard') iconContainer.innerHTML = '<svg viewBox="0 0 32 20" width="32" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="20" rx="4" fill="#F79E1B"/><circle cx="10" cy="10" r="6" fill="#EB001B"/><circle cx="22" cy="10" r="6" fill="#F79E1B"/><path d="M16 14.5C14.7 13.5 14 11.9 14 10C14 8.1 14.7 6.5 16 5.5C17.3 6.5 18 8.1 18 10C18 11.9 17.3 13.5 16 14.5Z" fill="#FF5F00"/></svg>';
+    else if (brand === 'amex') iconContainer.innerHTML = '<svg viewBox="0 0 32 20" width="32" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="20" rx="4" fill="#016FD0"/><path d="M7 11L9 11M7 9L9 9M7 7L9 7" stroke="white" stroke-width="2"/><text x="16" y="14" fill="white" font-size="10" font-weight="bold" font-family="sans-serif" text-anchor="middle">AMEX</text></svg>';
+    else if (brand === 'elo') iconContainer.innerHTML = '<svg viewBox="0 0 32 20" width="32" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="20" rx="4" fill="#000"/><text x="16" y="14" fill="white" font-size="10" font-weight="bold" font-family="sans-serif" text-anchor="middle">ELO</text></svg>';
+    else { iconContainer.innerHTML = '<i data-lucide="credit-card"></i>'; lucide.createIcons(); }
+  };
+
+  dom('numeroCartao').addEventListener('input', (e) => {
+    let brand = getCardBrand(e.target.value);
+    updateCardIcon(brand);
+    let cvvInput = dom('cvv');
+    if (cvvInput) cvvInput.placeholder = (brand === 'amex') ? '0000' : '000';
+  });
 }
 
 function loadFields() {
@@ -266,14 +292,15 @@ function loadFields() {
   dom('anoExpiracao').innerHTML = yearHtml;
 
   if (state.plan) {
-    let price = state.plan.totalPrice;
-    let parcHtml = '<option value="">Selecione</option>';
-    for (let i = 1; i <= 12; i++) {
-      let val = (price / i).toFixed(2).replace('.', ',');
-      let label = i === 1 ? `1x de R$ ${val} (à vista)` : `${i}x de R$ ${val} sem juros`;
-      parcHtml += `<option value="${i}">${label}</option>`;
-    }
+    let price = state.plan.price;
+    let val = price.toFixed(2).replace('.', ',');
+    let parcHtml = `<option value="12">12x de R$ ${val}</option>`;
     dom('parcelas').innerHTML = parcHtml;
+    // Set default value if empty
+    if (!state.payment.parcelas) {
+      state.payment.parcelas = '12';
+      saveState();
+    }
   }
 
   // Restore personal
@@ -369,7 +396,7 @@ dom('btn-submit').addEventListener('click', async () => {
     await new Promise(r => setTimeout(r, 2000));
     const success = Math.random() > 0.3;
     if (success) {
-      state.proposalNumber = 'LF-' + Math.floor(100000 + Math.random() * 900000);
+      state.proposalNumber = 'LDF-' + Math.floor(100000 + Math.random() * 900000);
       saveState();
       window.location.href = 'obrigado.html';
     } else {
